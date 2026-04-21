@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useExchangeRate } from '../hooks/useExchangeRate';
-import RateDisplay from './RateDisplay';
 import type { CurrencyCode } from '../types/currency';
 import './Converter.css';
 
@@ -8,97 +7,148 @@ export default function Converter() {
   const [amount, setAmount] = useState<string>('1');
   const [fromCurrency, setFromCurrency] = useState<CurrencyCode>('usd');
   const [toCurrency, setToCurrency] = useState<CurrencyCode>('ngn');
-
+  
   const { rate, loading, error, lastUpdated, refetch } = useExchangeRate(fromCurrency, toCurrency);
+
+  const formatNumber = (value: number): string => {
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  };
+
+  const formatDate = (dateString: string | null): string => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  const handleAmountChange = (value: string) => {
+    const sanitized = value.replace(/[^\d.]/g, '');
+    const parts = sanitized.split('.');
+    if (parts.length > 2) return;
+    setAmount(sanitized);
+  };
+
+  const calculateConversion = (): string => {
+    if (!rate || !amount) return '0.00';
+    const num = parseFloat(amount);
+    if (isNaN(num)) return '0.00';
+    return formatNumber(num * rate);
+  };
+
+  const getResultFontSize = (): string => {
+    const result = calculateConversion();
+    const length = result.replace(/,/g, '').length;
+    
+    if (length > 15) return '1.25rem';
+    if (length > 12) return '1.5rem';
+    if (length > 9) return '2rem';
+    return '2.5rem';
+  };
+
+  const getInputFontSize = (): string => {
+    const length = amount.length;
+    
+    if (length > 12) return '1.25rem';
+    if (length > 9) return '1.5rem';
+    if (length > 6) return '2rem';
+    return '2.5rem';
+  };
 
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
   };
 
-  const calculateConversion = (): string => {
-    if (!rate || !amount) return '0.00';
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount)) return '0.00';
-    return (numAmount * rate).toFixed(2);
+  const getCurrencyInfo = (code: CurrencyCode) => {
+    return code === 'usd' 
+      ? { flag: '🇺🇸', name: 'US Dollar', code: 'USD' }
+      : { flag: '🇳🇬', name: 'Nigerian Naira', code: 'NGN' };
   };
+
+  const fromInfo = getCurrencyInfo(fromCurrency);
+  const toInfo = getCurrencyInfo(toCurrency);
 
   return (
     <div className="converter">
-      {loading && <div className="loading">Loading rates...</div>}
-      
       {error && (
         <div className="error">
-          <p>{error}</p>
-          <button onClick={refetch}>Retry</button>
+          <p className="error-message">{error}</p>
+          <button onClick={refetch} className="retry-button">
+            Try Again
+          </button>
         </div>
       )}
 
-      {!loading && !error && (
-        <>
-          <RateDisplay 
-            rate={rate} 
-            from={fromCurrency} 
-            to={toCurrency} 
-            lastUpdated={lastUpdated}
-          />
-
-          <div className="converter-form">
-            <div className="input-group">
-              <label htmlFor="amount">Amount</label>
-              <input
-                id="amount"
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Enter amount"
-                min="0"
-                step="any"
-              />
-            </div>
-
-            <div className="currency-selector">
-              <div className="select-group">
-                <label htmlFor="from-currency">From</label>
-                <select
-                  id="from-currency"
-                  value={fromCurrency}
-                  onChange={(e) => setFromCurrency(e.target.value as CurrencyCode)}
-                >
-                  <option value="usd">USD</option>
-                  <option value="ngn">NGN</option>
-                </select>
+      {!error && (
+        <div className="converter-content">
+          <div className={`converter-card ${loading ? 'loading-state' : ''}`}>
+            <div className="currency-section">
+              <div className="currency-header">
+                <div className="currency-flag">{fromInfo.flag}</div>
+                <div className="currency-name">{fromInfo.name}</div>
               </div>
-
-              <button 
-                className="swap-button" 
-                onClick={handleSwap}
-                aria-label="Swap currencies"
-              >
-                ⇄
-              </button>
-
-              <div className="select-group">
-                <label htmlFor="to-currency">To</label>
-                <select
-                  id="to-currency"
-                  value={toCurrency}
-                  onChange={(e) => setToCurrency(e.target.value as CurrencyCode)}
-                >
-                  <option value="usd">USD</option>
-                  <option value="ngn">NGN</option>
-                </select>
+              <div className="amount-input-wrapper">
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  value={amount}
+                  onChange={(e) => handleAmountChange(e.target.value)}
+                  className="amount-input"
+                  placeholder="0"
+                  disabled={loading}
+                  style={{ fontSize: getInputFontSize() }}
+                />
+                <span className="currency-code">{fromInfo.code}</span>
               </div>
             </div>
 
-            <div className="result">
-              <p className="result-label">Converted Amount</p>
-              <p className="result-value">
-                {calculateConversion()} {toCurrency.toUpperCase()}
-              </p>
+            <button 
+              onClick={handleSwap} 
+              className="swap-button" 
+              aria-label="Swap currencies"
+              disabled={loading}
+            >
+              <span className="swap-icon">⇅</span>
+            </button>
+
+            <div className="currency-section result-section">
+              <div className="currency-header">
+                <div className="currency-flag">{toInfo.flag}</div>
+                <div className="currency-name">{toInfo.name}</div>
+              </div>
+              <div className="result-display">
+                {loading ? (
+                  <div className="skeleton-text"></div>
+                ) : (
+                  <>
+                    <span className="result-amount" style={{ fontSize: getResultFontSize() }}>
+                      {calculateConversion()}
+                    </span>
+                    <span className="currency-code">{toInfo.code}</span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </>
+
+          {lastUpdated && (
+            <div className="last-updated">
+              <span className="update-icon">●</span>
+              Updated {formatDate(lastUpdated)}
+            </div>
+          )}
+
+          <button onClick={refetch} className="refresh-button" disabled={loading}>
+            <span className={`refresh-icon ${loading ? 'spinning' : ''}`}>↻</span>
+            {loading ? 'Updating...' : 'Refresh Rates'}
+          </button>
+        </div>
       )}
     </div>
   );
