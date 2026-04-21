@@ -1,0 +1,114 @@
+PRICE APP - DEVELOPMENT TODO
+================================
+
+PHASE 0: PROJECT SETUP
+-----------------------
+[ ] Install Node.js dependencies (npm install)
+[ ] Verify TypeScript configuration
+[ ] Test dev server runs (npm run dev)
+
+PHASE 1: CORE FUNCTIONALITY
+----------------------------
+[ ] Create TypeScript types/interfaces
+    [ ] Currency type (NGN, USD)
+    [ ] ExchangeRate interface
+    [ ] API response types
+    
+[ ] Build API utility (src/utils/api.ts)
+    [ ] Fetch function with primary endpoint
+    [ ] Fallback mechanism for secondary endpoint
+    [ ] Error handling
+    [ ] Type the responses
+    
+[ ] Create custom hook (src/hooks/useExchangeRate.ts)
+    [ ] Fetch exchange rates on mount
+    [ ] Handle loading state
+    [ ] Handle error state
+    [ ] Return rate data
+    
+[ ] Build Converter component (src/components/Converter.tsx)
+    [ ] Amount input field
+    [ ] Currency selector (NGN/USD)
+    [ ] Conversion logic
+    [ ] Display converted amount
+    [ ] Swap currencies button
+    
+[ ] Build RateDisplay component (src/components/RateDisplay.tsx)
+    [ ] Show current exchange rate
+    [ ] Display last updated timestamp
+    [ ] Format numbers properly
+
+PHASE 2: STYLING & UX
+---------------------
+[ ] Create base styles (src/index.css)
+    [ ] CSS reset/normalize
+    [ ] CSS variables for colors
+    [ ] Responsive breakpoints
+    
+[ ] Style App component (src/App.css)
+    [ ] Header styling
+    [ ] Main container layout
+    [ ] Footer styling
+    
+[ ] Style Converter component
+    [ ] Input field styling
+    [ ] Button styling
+    [ ] Currency selector styling
+    [ ] Result display styling
+    
+[ ] Add loading states
+    [ ] Spinner/skeleton while fetching
+    [ ] Disabled state for inputs
+    
+[ ] Add error states
+    [ ] Error message display
+    [ ] Retry button
+    [ ] Offline indicator
+
+PHASE 3: POLISH & OPTIMIZATION
+-------------------------------
+[ ] Add animations/transitions
+    [ ] Fade in on load
+    [ ] Smooth number changes
+    [ ] Button hover effects
+    
+[ ] Responsive design testing
+    [ ] Mobile (320px - 480px)
+    [ ] Tablet (481px - 768px)
+    [ ] Desktop (769px+)
+    
+[ ] Accessibility improvements
+    [ ] ARIA labels
+    [ ] Keyboard navigation
+    [ ] Focus indicators
+    [ ] Screen reader testing
+    
+[ ] Performance optimization
+    [ ] Debounce input changes
+    [ ] Memoize calculations
+    [ ] Lazy load if needed
+    
+[ ] Browser testing
+    [ ] Chrome
+    [ ] Firefox
+    [ ] Safari
+    [ ] Edge
+
+PHASE 4: DEPLOYMENT
+-------------------
+[ ] Build for production (npm run build)
+[ ] Test production build locally (npm run preview)
+[ ] Choose hosting platform (Vercel/Netlify/etc)
+[ ] Deploy
+[ ] Test live site
+[ ] Update README with live URL
+
+NICE TO HAVE (FUTURE)
+---------------------
+[ ] Add more currencies (EUR, GBP, etc)
+[ ] Historical rate chart
+[ ] Rate change notifications
+[ ] Dark mode toggle
+[ ] PWA support (offline mode)
+[ ] Share conversion results
+[ ] Favorite currency pairs
