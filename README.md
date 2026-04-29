@@ -5,7 +5,8 @@ A fast, simple React web app for converting Nigerian Naira (NGN) to US Dollar (U
 ## ✨ Features
 
 - 🔄 Real-time exchange rates
-- 💸 Convert NGN ↔ USD instantly
+- 💸 Convert between multiple currencies (USD, NGN, EUR, GBP)
+- 🔀 Quick currency swap
 - 📱 Mobile-friendly responsive design
 - ⚡ Fast and lightweight
 - 🆓 Uses free API (no rate limits)
@@ -37,10 +38,12 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 📖 Usage
 
-1. Enter the amount you want to convert
-2. Click the swap button to switch between NGN → USD or USD → NGN
-3. See the converted amount instantly
-4. Tap "Refresh Rates" to get the latest exchange rates
+1. Select your source currency from the dropdown (USD, NGN, EUR, GBP)
+2. Enter the amount you want to convert
+3. Select your target currency from the bottom dropdown
+4. See the converted amount instantly
+5. Click the swap button (⇅) to reverse the conversion
+6. Tap "Refresh Rates" to get the latest exchange rates
 
 ### 📲 Install as App (PWA)
 

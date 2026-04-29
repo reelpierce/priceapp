@@ -1,5 +1,13 @@
 // Currency codes we support
-export type CurrencyCode = 'usd' | 'ngn';
+export type CurrencyCode = 'usd' | 'ngn' | 'eur' | 'gbp';
+
+// Currency information
+export interface CurrencyInfo {
+  code: string;
+  name: string;
+  flag: string;
+  symbol: string;
+}
 
 // API response structure from fawazahmed0/exchange-api
 export interface ExchangeRateResponse {

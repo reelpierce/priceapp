@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useExchangeRate } from '../hooks/useExchangeRate';
-import type { CurrencyCode } from '../types/currency';
+import type { CurrencyCode, CurrencyInfo } from '../types/currency';
 import './Converter.css';
+
+const CURRENCIES: Record<CurrencyCode, CurrencyInfo> = {
+  usd: { code: 'USD', name: 'US Dollar', flag: '🇺🇸', symbol: '$' },
+  ngn: { code: 'NGN', name: 'Nigerian Naira', flag: '🇳🇬', symbol: '₦' },
+  eur: { code: 'EUR', name: 'Euro', flag: '🇪🇺', symbol: '€' },
+  gbp: { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£' },
+};
 
 export default function Converter() {
   const [amount, setAmount] = useState<string>('1');
@@ -65,14 +72,8 @@ export default function Converter() {
     setToCurrency(fromCurrency);
   };
 
-  const getCurrencyInfo = (code: CurrencyCode) => {
-    return code === 'usd' 
-      ? { flag: '🇺🇸', name: 'US Dollar', code: 'USD' }
-      : { flag: '🇳🇬', name: 'Nigerian Naira', code: 'NGN' };
-  };
-
-  const fromInfo = getCurrencyInfo(fromCurrency);
-  const toInfo = getCurrencyInfo(toCurrency);
+  const fromInfo = CURRENCIES[fromCurrency];
+  const toInfo = CURRENCIES[toCurrency];
 
   return (
     <div className="converter">
@@ -91,7 +92,21 @@ export default function Converter() {
             <div className="currency-section">
               <div className="currency-header">
                 <div className="currency-flag">{fromInfo.flag}</div>
-                <div className="currency-name">{fromInfo.name}</div>
+                <div className="currency-info-text">
+                  <div className="currency-name">{fromInfo.name}</div>
+                  <select
+                    value={fromCurrency}
+                    onChange={(e) => setFromCurrency(e.target.value as CurrencyCode)}
+                    className="currency-select"
+                    disabled={loading}
+                  >
+                    {Object.entries(CURRENCIES).map(([code, info]) => (
+                      <option key={code} value={code}>
+                        {info.code}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="amount-input-wrapper">
                 <input
@@ -120,7 +135,21 @@ export default function Converter() {
             <div className="currency-section result-section">
               <div className="currency-header">
                 <div className="currency-flag">{toInfo.flag}</div>
-                <div className="currency-name">{toInfo.name}</div>
+                <div className="currency-info-text">
+                  <div className="currency-name">{toInfo.name}</div>
+                  <select
+                    value={toCurrency}
+                    onChange={(e) => setToCurrency(e.target.value as CurrencyCode)}
+                    className="currency-select"
+                    disabled={loading}
+                  >
+                    {Object.entries(CURRENCIES).map(([code, info]) => (
+                      <option key={code} value={code}>
+                        {info.code}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="result-display">
                 {loading ? (
