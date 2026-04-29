@@ -1,5 +1,6 @@
 .app {
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -37,5 +38,16 @@
   
   .app-footer {
     padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-main {
+    padding: 1rem 0.75rem;
+  }
+  
+  .app-footer {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.7rem;
   }
 }

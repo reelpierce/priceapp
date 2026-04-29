@@ -199,6 +199,8 @@
   align-self: center;
   width: 44px;
   height: 44px;
+  min-width: 44px; /* Minimum touch target size */
+  min-height: 44px;
   border-radius: 50%;
   background: var(--gray-100);
   display: flex;
@@ -206,11 +208,16 @@
   justify-content: center;
   transition: all 0.2s;
   border: 1px solid var(--gray-200);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .swap-button:hover:not(:disabled) {
   background: var(--gray-200);
   transform: rotate(180deg);
+}
+
+.swap-button:active:not(:disabled) {
+  transform: scale(0.95) rotate(180deg);
 }
 
 .swap-button:disabled {
@@ -291,6 +298,7 @@
   margin-top: 0.75rem;
   width: 100%;
   padding: 0.625rem;
+  min-height: 44px; /* Minimum touch target size */
   background: var(--black);
   color: var(--white);
   border-radius: 8px;
@@ -301,10 +309,15 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .refresh-button:hover:not(:disabled) {
   opacity: 0.8;
+}
+
+.refresh-button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .refresh-button:disabled {
@@ -345,5 +358,61 @@
   
   .skeleton-text {
     height: 2rem;
+  }
+  
+  .swap-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .swap-icon {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .converter {
+    max-width: 100%;
+  }
+  
+  .converter-card {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .currency-flag {
+    font-size: 1.25rem;
+  }
+  
+  .currency-name {
+    font-size: 0.8125rem;
+  }
+
+  .currency-code {
+    font-size: 0.9375rem;
+  }
+  
+  .swap-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .swap-icon {
+    font-size: 1rem;
+  }
+  
+  .result-section {
+    padding-top: 1rem;
+  }
+  
+  .last-updated {
+    font-size: 0.65rem;
+    margin-top: 0.75rem;
+  }
+  
+  .refresh-button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
   }
 }

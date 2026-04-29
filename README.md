@@ -1,73 +1,111 @@
-# React + TypeScript + Vite
+# 💱 Price App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fast, simple React web app for converting Nigerian Naira (NGN) to US Dollar (USD) and back. Built for crypto bros and anyone who needs quick currency conversions.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🔄 Real-time exchange rates
+- 💸 Convert NGN ↔ USD instantly
+- 📱 Mobile-friendly responsive design
+- ⚡ Fast and lightweight
+- 🆓 Uses free API (no rate limits)
+- 📲 **PWA - Install as mobile app**
+- 🌐 **Works offline with cached rates**
+- 🎯 **Touch-optimized for mobile**
+- 🌓 Dark mode support
 
-## React Compiler
+## 🚀 Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js 16+ installed
+- npm or yarn
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Clone or download this project
+cd price-app
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Install dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📖 Usage
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Enter the amount you want to convert
+2. Click the swap button to switch between NGN → USD or USD → NGN
+3. See the converted amount instantly
+4. Tap "Refresh Rates" to get the latest exchange rates
+
+### 📲 Install as App (PWA)
+
+**On Mobile (iOS/Android):**
+1. Open the app in your browser (Safari/Chrome)
+2. Tap the "Share" or "Menu" button
+3. Select "Add to Home Screen"
+4. The app will install like a native app
+5. Launch from your home screen - works offline!
+
+**On Desktop (Chrome/Edge):**
+1. Look for the install icon (⊕) in the address bar
+2. Click "Install" 
+3. App opens in its own window
+
+## 🛠️ Tech Stack
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite 8** - Build tool & dev server
+- **PWA** - Progressive Web App with offline support
+- **fawazahmed0/exchange-api** - Free currency API
+
+## 🔌 API
+
+This app uses the free [exchange-api](https://github.com/fawazahmed0/exchange-api) which provides:
+- 200+ currencies
+- No rate limits
+- Daily updates
+- No API key required
+
+## 📦 Build for Production
+
+```bash
+npm run build
 ```
+
+The optimized build will be in the `dist/` folder, ready to deploy.
+
+## 🚢 Deployment
+
+Deploy to any static hosting service:
+- **Vercel** (Recommended)
+- **Netlify**
+- **GitHub Pages**
+- **Cloudflare Pages**
+
+All support PWA features out of the box!
+
+## 📱 Mobile Optimization
+
+- Dynamic viewport height (dvh) for proper mobile display
+- Touch-friendly buttons (44px minimum)
+- No zoom on input focus
+- Responsive font sizing for large numbers
+- Optimized for one-handed use
+
+## 📝 License
+
+MIT - Do whatever you want with it!
+
+## 🤝 Contributing
+
+Feel free to open issues or submit PRs to make this better.
+
+---
+
+Made with ❤️ for the crypto community

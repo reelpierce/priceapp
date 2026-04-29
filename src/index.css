@@ -37,6 +37,10 @@ body {
   overflow: hidden;
   background: var(--white);
   color: var(--black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,6 +52,7 @@ body {
 
 #root {
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   overflow: hidden;
