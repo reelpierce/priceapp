@@ -19,7 +19,7 @@ export default function Exchange() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { rate, loading } = useExchangeRate(fromCurrency, toCurrency);
-  const { balances, getBalance, exchange } = useWallet();
+  const { getBalance, exchange } = useWallet();
 
   const formatNumber = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
