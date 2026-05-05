@@ -1,0 +1,190 @@
+.exchange {
+  max-width: 420px;
+  width: 100%;
+}
+
+.exchange-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .exchange-card {
+    border-color: var(--gray-800);
+    background: var(--black);
+  }
+}
+
+.exchange-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-label {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.currency-select-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.currency-dropdown {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .currency-dropdown {
+    background: var(--gray-900);
+    border-color: var(--gray-800);
+    color: var(--white);
+  }
+}
+
+.amount-input-exchange {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: right;
+  background: var(--white);
+  color: var(--black);
+}
+
+.amount-input-exchange:focus {
+  outline: none;
+  border-color: var(--black);
+}
+
+@media (prefers-color-scheme: dark) {
+  .amount-input-exchange {
+    background: var(--gray-900);
+    border-color: var(--gray-800);
+    color: var(--white);
+  }
+  
+  .amount-input-exchange:focus {
+    border-color: var(--white);
+  }
+}
+
+.receive-amount {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--gray-600);
+}
+
+@media (prefers-color-scheme: dark) {
+  .receive-amount {
+    color: var(--gray-400);
+  }
+}
+
+.balance-info,
+.rate-info {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+.swap-button-exchange {
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.swap-button-exchange:hover:not(:disabled) {
+  background: var(--gray-200);
+  transform: rotate(180deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .swap-button-exchange {
+    background: var(--gray-900);
+    border-color: var(--gray-800);
+  }
+  
+  .swap-button-exchange:hover:not(:disabled) {
+    background: var(--gray-800);
+  }
+}
+
+.exchange-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+}
+
+.exchange-button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.exchange-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .exchange-button {
+    background: var(--white);
+    color: var(--black);
+  }
+}
+
+.error-message-exchange {
+  padding: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.success-message {
+  padding: 0.75rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  color: #16a34a;
+  font-size: 0.875rem;
+  text-align: center;
+  font-weight: 600;
+}

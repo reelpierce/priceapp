@@ -1,6 +1,6 @@
 .app {
   height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile */
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -12,7 +12,71 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem;
-  overflow: hidden;
+  overflow: auto;
+}
+
+.app-container {
+  max-width: 420px;
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tabs {
+    border-bottom-color: var(--gray-800);
+  }
+}
+
+.tab {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab:hover {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.tab.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+@media (prefers-color-scheme: dark) {
+  .tab:hover {
+    background: var(--gray-900);
+    color: var(--gray-300);
+  }
+  
+  .tab.active {
+    background: var(--white);
+    color: var(--black);
+  }
+}
+
+.view-container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .app-footer {
@@ -38,6 +102,15 @@
   
   .app-footer {
     padding: 0.75rem 1rem;
+  }
+  
+  .tabs {
+    gap: 0.25rem;
+  }
+  
+  .tab {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
   }
 }
 

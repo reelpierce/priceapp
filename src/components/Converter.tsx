@@ -14,6 +14,8 @@ export default function Converter() {
   const [amount, setAmount] = useState<string>('1');
   const [fromCurrency, setFromCurrency] = useState<CurrencyCode>('usd');
   const [toCurrency, setToCurrency] = useState<CurrencyCode>('ngn');
+  const [showFromPicker, setShowFromPicker] = useState(false);
+  const [showToPicker, setShowToPicker] = useState(false);
   
   const { rate, loading, error, lastUpdated, refetch } = useExchangeRate(fromCurrency, toCurrency);
 
@@ -72,6 +74,16 @@ export default function Converter() {
     setToCurrency(fromCurrency);
   };
 
+  const handleFromCurrencySelect = (code: CurrencyCode) => {
+    setFromCurrency(code);
+    setShowFromPicker(false);
+  };
+
+  const handleToCurrencySelect = (code: CurrencyCode) => {
+    setToCurrency(code);
+    setShowToPicker(false);
+  };
+
   const fromInfo = CURRENCIES[fromCurrency];
   const toInfo = CURRENCIES[toCurrency];
 
@@ -90,24 +102,38 @@ export default function Converter() {
         <div className="converter-content">
           <div className={`converter-card ${loading ? 'loading-state' : ''}`}>
             <div className="currency-section">
-              <div className="currency-header">
+              <button 
+                className="currency-picker-button"
+                onClick={() => setShowFromPicker(!showFromPicker)}
+                disabled={loading}
+              >
                 <div className="currency-flag">{fromInfo.flag}</div>
                 <div className="currency-info-text">
                   <div className="currency-name">{fromInfo.name}</div>
-                  <select
-                    value={fromCurrency}
-                    onChange={(e) => setFromCurrency(e.target.value as CurrencyCode)}
-                    className="currency-select"
-                    disabled={loading}
-                  >
-                    {Object.entries(CURRENCIES).map(([code, info]) => (
-                      <option key={code} value={code}>
-                        {info.code}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="currency-code-small">{fromInfo.code}</div>
                 </div>
-              </div>
+                <span className="picker-arrow">▼</span>
+              </button>
+
+              {showFromPicker && (
+                <div className="currency-picker">
+                  {Object.entries(CURRENCIES).map(([code, info]) => (
+                    <button
+                      key={code}
+                      className={`currency-option ${code === fromCurrency ? 'active' : ''}`}
+                      onClick={() => handleFromCurrencySelect(code as CurrencyCode)}
+                    >
+                      <span className="option-flag">{info.flag}</span>
+                      <div className="option-info">
+                        <div className="option-code">{info.code}</div>
+                        <div className="option-name">{info.name}</div>
+                      </div>
+                      {code === fromCurrency && <span className="check-mark">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="amount-input-wrapper">
                 <input
                   type="text"
@@ -133,24 +159,38 @@ export default function Converter() {
             </button>
 
             <div className="currency-section result-section">
-              <div className="currency-header">
+              <button 
+                className="currency-picker-button"
+                onClick={() => setShowToPicker(!showToPicker)}
+                disabled={loading}
+              >
                 <div className="currency-flag">{toInfo.flag}</div>
                 <div className="currency-info-text">
                   <div className="currency-name">{toInfo.name}</div>
-                  <select
-                    value={toCurrency}
-                    onChange={(e) => setToCurrency(e.target.value as CurrencyCode)}
-                    className="currency-select"
-                    disabled={loading}
-                  >
-                    {Object.entries(CURRENCIES).map(([code, info]) => (
-                      <option key={code} value={code}>
-                        {info.code}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="currency-code-small">{toInfo.code}</div>
                 </div>
-              </div>
+                <span className="picker-arrow">▼</span>
+              </button>
+
+              {showToPicker && (
+                <div className="currency-picker">
+                  {Object.entries(CURRENCIES).map(([code, info]) => (
+                    <button
+                      key={code}
+                      className={`currency-option ${code === toCurrency ? 'active' : ''}`}
+                      onClick={() => handleToCurrencySelect(code as CurrencyCode)}
+                    >
+                      <span className="option-flag">{info.flag}</span>
+                      <div className="option-info">
+                        <div className="option-code">{info.code}</div>
+                        <div className="option-name">{info.name}</div>
+                      </div>
+                      {code === toCurrency && <span className="check-mark">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="result-display">
                 {loading ? (
                   <div className="skeleton-text"></div>
