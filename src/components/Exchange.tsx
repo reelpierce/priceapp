@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { useExchangeRate } from '../hooks/useExchangeRate';
 import { walletAPI } from '../services/api';
 import type { CurrencyCode, CurrencyInfo } from '../types/currency';
@@ -11,7 +12,12 @@ const CURRENCIES: Record<CurrencyCode, CurrencyInfo> = {
   gbp: { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£' },
 };
 
-export default function Exchange() {
+interface ExchangeProps {
+  onLoginRequired?: () => void;
+}
+
+export default function Exchange({ onLoginRequired }: ExchangeProps) {
+  const { user } = useAuth();
   const [fromCurrency, setFromCurrency] = useState<CurrencyCode>('usd');
   const [toCurrency, setToCurrency] = useState<CurrencyCode>('ngn');
   const [amount, setAmount] = useState<string>('');
@@ -23,8 +29,10 @@ export default function Exchange() {
   const { rate, loading } = useExchangeRate(fromCurrency, toCurrency);
 
   useEffect(() => {
-    fetchBalances();
-  }, []);
+    if (user) {
+      fetchBalances();
+    }
+  }, [user]);
 
   const fetchBalances = async () => {
     try {
@@ -63,6 +71,14 @@ export default function Exchange() {
   };
 
   const handleExchange = async () => {
+    // Check if user is logged in
+    if (!user) {
+      if (onLoginRequired) {
+        onLoginRequired();
+      }
+      return;
+    }
+
     const fromAmount = parseFloat(amount);
     
     if (!fromAmount || fromAmount <= 0) {
@@ -138,9 +154,11 @@ export default function Exchange() {
               disabled={loading || exchanging}
             />
           </div>
-          <div className="balance-info">
-            Balance: {formatNumber(fromBalance)} {fromInfo.code}
-          </div>
+          {user && (
+            <div className="balance-info">
+              Balance: {formatNumber(fromBalance)} {fromInfo.code}
+            </div>
+          )}
         </div>
 
         <button 
@@ -188,12 +206,18 @@ export default function Exchange() {
           </div>
         )}
 
+        {!user && (
+          <div className="login-prompt">
+            <p>🔒 Login or register to exchange currencies</p>
+          </div>
+        )}
+
         <button 
           onClick={handleExchange}
           className="exchange-button"
           disabled={loading || exchanging || !amount || parseFloat(amount) <= 0}
         >
-          {exchanging ? 'Exchanging...' : loading ? 'Loading...' : 'Exchange Now'}
+          {exchanging ? 'Exchanging...' : loading ? 'Loading...' : user ? 'Exchange Now' : 'Login to Exchange'}
         </button>
       </div>
     </div>

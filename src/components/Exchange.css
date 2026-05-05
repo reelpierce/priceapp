@@ -188,3 +188,29 @@
   text-align: center;
   font-weight: 600;
 }
+
+.login-prompt {
+  padding: 1rem;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.login-prompt p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-prompt {
+    background: var(--gray-900);
+    border-color: var(--gray-800);
+  }
+  
+  .login-prompt p {
+    color: var(--gray-400);
+  }
+}

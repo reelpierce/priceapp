@@ -32,7 +32,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const response = await authAPI.getCurrentUser();
         setUser(response.user);
       } catch (error) {
-        console.error('Auth check failed:', error);
+        // Silently fail if backend is not available
+        // User can still browse the app without authentication
+        console.log('Auth check skipped - backend not available');
         removeAuthToken();
       } finally {
         setLoading(false);

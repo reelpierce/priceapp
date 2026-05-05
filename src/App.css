@@ -26,6 +26,160 @@
   width: 100%;
 }
 
+.guest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .guest-header {
+    background: var(--black);
+    border-color: var(--gray-800);
+  }
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-title {
+    color: var(--white);
+  }
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.login-button-header,
+.register-button-header {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.login-button-header {
+  background: transparent;
+  color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+}
+
+.login-button-header:hover {
+  background: var(--gray-100);
+}
+
+.register-button-header {
+  background: var(--black);
+  color: var(--white);
+}
+
+.register-button-header:hover {
+  background: var(--gray-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-button-header {
+    color: var(--gray-300);
+    border-color: var(--gray-800);
+  }
+  
+  .login-button-header:hover {
+    background: var(--gray-900);
+  }
+  
+  .register-button-header {
+    background: var(--white);
+    color: var(--black);
+  }
+  
+  .register-button-header:hover {
+    background: var(--gray-100);
+  }
+}
+
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.auth-modal {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--black);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 1001;
+}
+
+.close-modal:hover {
+  background: var(--white);
+  transform: scale(1.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .close-modal {
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--white);
+  }
+  
+  .close-modal:hover {
+    background: var(--black);
+  }
+}
+
 .user-header {
   display: flex;
   justify-content: space-between;

@@ -7,7 +7,7 @@ import Exchange from './components/Exchange'
 import Wallet from './components/Wallet'
 import './App.css'
 
-type View = 'converter' | 'exchange' | 'wallet';
+type View = 'converter' | 'exchange' | 'wallet' | 'auth';
 type AuthView = 'login' | 'register';
 
 function AppContent() {
@@ -25,19 +25,28 @@ function AppContent() {
     );
   }
 
-  if (!user) {
+  // Show auth modal when user clicks login/register
+  if (activeView === 'auth') {
     return (
       <div className="app">
         <main className="app-main">
-          {authView === 'login' ? (
-            <Login onSwitchToRegister={() => setAuthView('register')} />
-          ) : (
-            <Register onSwitchToLogin={() => setAuthView('login')} />
-          )}
+          <div className="auth-modal-overlay">
+            <div className="auth-modal">
+              <button 
+                className="close-modal" 
+                onClick={() => setActiveView('exchange')}
+                aria-label="Close"
+              >
+                ×
+              </button>
+              {authView === 'login' ? (
+                <Login onSwitchToRegister={() => setAuthView('register')} />
+              ) : (
+                <Register onSwitchToLogin={() => setAuthView('login')} />
+              )}
+            </div>
+          </div>
         </main>
-        <footer className="app-footer">
-          <p>Powered by free exchange rate API</p>
-        </footer>
       </div>
     );
   }
@@ -46,23 +55,51 @@ function AppContent() {
     <div className="app">
       <main className="app-main">
         <div className="app-container">
-          <div className="user-header">
-            <div className="user-info">
-              <span className="user-name">👋 {user.fullName}</span>
-              <span className="user-email">{user.email}</span>
+          {user ? (
+            <div className="user-header">
+              <div className="user-info">
+                <span className="user-name">👋 {user.fullName}</span>
+                <span className="user-email">{user.email}</span>
+              </div>
+              <button onClick={logout} className="logout-button">
+                Logout
+              </button>
             </div>
-            <button onClick={logout} className="logout-button">
-              Logout
-            </button>
-          </div>
+          ) : (
+            <div className="guest-header">
+              <div className="app-title">💱 Price App</div>
+              <div className="auth-buttons">
+                <button 
+                  onClick={() => {
+                    setAuthView('login');
+                    setActiveView('auth');
+                  }} 
+                  className="login-button-header"
+                >
+                  Login
+                </button>
+                <button 
+                  onClick={() => {
+                    setAuthView('register');
+                    setActiveView('auth');
+                  }} 
+                  className="register-button-header"
+                >
+                  Register
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="tabs">
-            <button 
-              className={`tab ${activeView === 'wallet' ? 'active' : ''}`}
-              onClick={() => setActiveView('wallet')}
-            >
-              💰 Wallet
-            </button>
+            {user && (
+              <button 
+                className={`tab ${activeView === 'wallet' ? 'active' : ''}`}
+                onClick={() => setActiveView('wallet')}
+              >
+                💰 Wallet
+              </button>
+            )}
             <button 
               className={`tab ${activeView === 'exchange' ? 'active' : ''}`}
               onClick={() => setActiveView('exchange')}
@@ -78,8 +115,15 @@ function AppContent() {
           </div>
 
           <div className="view-container">
-            {activeView === 'wallet' && <Wallet />}
-            {activeView === 'exchange' && <Exchange />}
+            {activeView === 'wallet' && user && <Wallet />}
+            {activeView === 'exchange' && (
+              <Exchange 
+                onLoginRequired={() => {
+                  setAuthView('login');
+                  setActiveView('auth');
+                }}
+              />
+            )}
             {activeView === 'converter' && <Converter />}
           </div>
         </div>
