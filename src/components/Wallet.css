@@ -67,6 +67,42 @@
   }
 }
 
+.wallet-loading,
+.wallet-error {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray-500);
+}
+
+.wallet-error p {
+  margin-bottom: 1rem;
+  color: var(--gray-600);
+}
+
+@media (prefers-color-scheme: dark) {
+  .wallet-error p {
+    color: var(--gray-400);
+  }
+}
+
+.retry-button-wallet {
+  padding: 0.5rem 1rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .retry-button-wallet {
+    background: var(--white);
+    color: var(--black);
+  }
+}
+
 @media (max-width: 400px) {
   .wallet-grid {
     grid-template-columns: 1fr;

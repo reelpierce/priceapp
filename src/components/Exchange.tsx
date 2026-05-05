@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useExchangeRate } from '../hooks/useExchangeRate';
-import { useWallet } from '../hooks/useWallet';
+import { walletAPI } from '../services/api';
 import type { CurrencyCode, CurrencyInfo } from '../types/currency';
 import './Exchange.css';
 
@@ -15,11 +15,25 @@ export default function Exchange() {
   const [fromCurrency, setFromCurrency] = useState<CurrencyCode>('usd');
   const [toCurrency, setToCurrency] = useState<CurrencyCode>('ngn');
   const [amount, setAmount] = useState<string>('');
+  const [balances, setBalances] = useState<Record<string, number>>({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [exchanging, setExchanging] = useState(false);
 
   const { rate, loading } = useExchangeRate(fromCurrency, toCurrency);
-  const { getBalance, exchange } = useWallet();
+
+  useEffect(() => {
+    fetchBalances();
+  }, []);
+
+  const fetchBalances = async () => {
+    try {
+      const response = await walletAPI.getBalances();
+      setBalances(response.balances);
+    } catch (err) {
+      console.error('Failed to fetch balances:', err);
+    }
+  };
 
   const formatNumber = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -48,7 +62,7 @@ export default function Exchange() {
     setToCurrency(fromCurrency);
   };
 
-  const handleExchange = () => {
+  const handleExchange = async () => {
     const fromAmount = parseFloat(amount);
     
     if (!fromAmount || fromAmount <= 0) {
@@ -61,28 +75,39 @@ export default function Exchange() {
       return;
     }
 
-    const currentBalance = getBalance(fromCurrency);
+    const currentBalance = balances[fromCurrency] || 0;
     
     if (fromAmount > currentBalance) {
       setErrorMessage(`Insufficient ${CURRENCIES[fromCurrency].code} balance`);
       return;
     }
 
-    const success = exchange(fromCurrency, toCurrency, fromAmount, rate);
-    
-    if (success) {
+    try {
+      setExchanging(true);
+      await walletAPI.exchange({
+        fromCurrency,
+        toCurrency,
+        fromAmount,
+        exchangeRate: rate,
+      });
+
+      // Refresh balances
+      await fetchBalances();
+      
       setShowSuccess(true);
       setAmount('');
       setErrorMessage('');
       setTimeout(() => setShowSuccess(false), 3000);
-    } else {
-      setErrorMessage('Exchange failed. Please try again.');
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : 'Exchange failed');
+    } finally {
+      setExchanging(false);
     }
   };
 
   const fromInfo = CURRENCIES[fromCurrency];
   const toInfo = CURRENCIES[toCurrency];
-  const fromBalance = getBalance(fromCurrency);
+  const fromBalance = balances[fromCurrency] || 0;
   const receiveAmount = calculateReceiveAmount();
 
   return (
@@ -95,7 +120,7 @@ export default function Exchange() {
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value as CurrencyCode)}
               className="currency-dropdown"
-              disabled={loading}
+              disabled={loading || exchanging}
             >
               {Object.entries(CURRENCIES).map(([code, info]) => (
                 <option key={code} value={code}>
@@ -110,7 +135,7 @@ export default function Exchange() {
               onChange={(e) => handleAmountChange(e.target.value)}
               className="amount-input-exchange"
               placeholder="0.00"
-              disabled={loading}
+              disabled={loading || exchanging}
             />
           </div>
           <div className="balance-info">
@@ -122,7 +147,7 @@ export default function Exchange() {
           onClick={handleSwap} 
           className="swap-button-exchange" 
           aria-label="Swap currencies"
-          disabled={loading}
+          disabled={loading || exchanging}
         >
           ⇅
         </button>
@@ -134,7 +159,7 @@ export default function Exchange() {
               value={toCurrency}
               onChange={(e) => setToCurrency(e.target.value as CurrencyCode)}
               className="currency-dropdown"
-              disabled={loading}
+              disabled={loading || exchanging}
             >
               {Object.entries(CURRENCIES).map(([code, info]) => (
                 <option key={code} value={code}>
@@ -166,9 +191,9 @@ export default function Exchange() {
         <button 
           onClick={handleExchange}
           className="exchange-button"
-          disabled={loading || !amount || parseFloat(amount) <= 0}
+          disabled={loading || exchanging || !amount || parseFloat(amount) <= 0}
         >
-          {loading ? 'Loading...' : 'Exchange Now'}
+          {exchanging ? 'Exchanging...' : loading ? 'Loading...' : 'Exchange Now'}
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import { useWallet } from '../hooks/useWallet';
+import { useEffect, useState } from 'react';
+import { walletAPI } from '../services/api';
 import type { CurrencyCode, CurrencyInfo } from '../types/currency';
 import './Wallet.css';
 
@@ -10,7 +11,26 @@ const CURRENCIES: Record<CurrencyCode, CurrencyInfo> = {
 };
 
 export default function Wallet() {
-  const { balances } = useWallet();
+  const [balances, setBalances] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    fetchBalances();
+  }, []);
+
+  const fetchBalances = async () => {
+    try {
+      setLoading(true);
+      const response = await walletAPI.getBalances();
+      setBalances(response.balances);
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch balances');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formatNumber = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -18,6 +38,29 @@ export default function Wallet() {
       maximumFractionDigits: 2,
     }).format(value);
   };
+
+  if (loading) {
+    return (
+      <div className="wallet">
+        <h2 className="wallet-title">Your Wallet</h2>
+        <div className="wallet-loading">Loading balances...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="wallet">
+        <h2 className="wallet-title">Your Wallet</h2>
+        <div className="wallet-error">
+          <p>{error}</p>
+          <button onClick={fetchBalances} className="retry-button-wallet">
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="wallet">

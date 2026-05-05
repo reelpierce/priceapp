@@ -15,9 +15,83 @@
   overflow: auto;
 }
 
+.loading-screen {
+  text-align: center;
+  font-size: 1.125rem;
+  color: var(--gray-500);
+}
+
 .app-container {
   max-width: 420px;
   width: 100%;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .user-header {
+    background: var(--black);
+    border-color: var(--gray-800);
+  }
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--black);
+}
+
+.user-email {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  .user-name {
+    color: var(--white);
+  }
+}
+
+.logout-button {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-button:hover {
+  background: var(--gray-100);
+}
+
+@media (prefers-color-scheme: dark) {
+  .logout-button {
+    border-color: var(--gray-800);
+    color: var(--gray-300);
+  }
+  
+  .logout-button:hover {
+    background: var(--gray-900);
+  }
 }
 
 .tabs {
@@ -111,6 +185,10 @@
   .tab {
     padding: 0.625rem 0.75rem;
     font-size: 0.8125rem;
+  }
+  
+  .user-header {
+    padding: 0.75rem;
   }
 }
 
