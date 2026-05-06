@@ -27,10 +27,12 @@ app.get('/api/health', (req, res) => {
 import authRoutes from './routes/auth.js';
 import walletRoutes from './routes/wallet.js';
 import transactionRoutes from './routes/transactions.js';
+import depositRoutes from './routes/deposits.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/deposits', depositRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
