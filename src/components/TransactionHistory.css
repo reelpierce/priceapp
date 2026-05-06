@@ -1,0 +1,337 @@
+.transaction-history {
+  max-width: 800px;
+  width: 100%;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.history-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.export-button {
+  padding: 0.625rem 1.25rem;
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.export-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .filter-bar {
+    background: rgba(15, 23, 42, 0.6);
+  }
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--primary-purple);
+}
+
+.filter-btn.active {
+  background: var(--gradient-primary);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .filter-btn {
+    color: var(--gray-400);
+  }
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transaction-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.transaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .transaction-card {
+    background: rgba(15, 23, 42, 0.9);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+}
+
+.transaction-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.transaction-currencies {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.currency-badge {
+  padding: 0.375rem 0.75rem;
+  background: var(--gradient-bg);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  .currency-badge {
+    background: rgba(30, 27, 107, 0.3);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: var(--white);
+  }
+}
+
+.arrow {
+  font-size: 1.25rem;
+  color: var(--primary-purple);
+}
+
+.transaction-amounts {
+  display: flex;
+  gap: 1.5rem;
+  text-align: right;
+}
+
+.amount-sent,
+.amount-received {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.amount-sent .label,
+.amount-received .label {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.amount-sent .value {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--deep-purple);
+}
+
+.amount-received .value {
+  font-size: 1.125rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.transaction-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(139, 92, 246, 0.1);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.transaction-date {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.transaction-rate {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  font-weight: 600;
+}
+
+.transaction-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-completed {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  color: #16a34a;
+  border: 1px solid #86efac;
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #d97706;
+  border: 1px solid #fbbf24;
+}
+
+.status-failed {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .status-completed {
+    background: linear-gradient(135deg, #052e16 0%, #14532d 100%);
+    color: #86efac;
+  }
+  
+  .status-pending {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+    color: #fbbf24;
+  }
+  
+  .status-failed {
+    background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
+    color: #fca5a5;
+  }
+}
+
+.history-loading,
+.history-error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray-500);
+}
+
+.retry-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.9375rem;
+  color: var(--gray-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  .empty-state h3 {
+    color: var(--gray-300);
+  }
+}
+
+@media (max-width: 768px) {
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .transaction-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .transaction-amounts {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .transaction-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .filter-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

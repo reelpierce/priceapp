@@ -5,9 +5,10 @@ import Register from './components/Auth/Register'
 import Converter from './components/Converter'
 import Exchange from './components/Exchange'
 import Wallet from './components/Wallet'
+import TransactionHistory from './components/TransactionHistory'
 import './App.css'
 
-type View = 'converter' | 'exchange' | 'wallet' | 'auth';
+type View = 'converter' | 'exchange' | 'wallet' | 'history' | 'auth';
 type AuthView = 'login' | 'register';
 
 function AppContent() {
@@ -118,6 +119,14 @@ function AppContent() {
             >
               💱 Convert
             </button>
+            {user && (
+              <button 
+                className={`tab ${activeView === 'history' ? 'active' : ''}`}
+                onClick={() => setActiveView('history')}
+              >
+                📊 History
+              </button>
+            )}
           </div>
 
           <div className="view-container">
@@ -131,6 +140,7 @@ function AppContent() {
               />
             )}
             {activeView === 'converter' && <Converter />}
+            {activeView === 'history' && user && <TransactionHistory />}
           </div>
         </div>
       </main>
