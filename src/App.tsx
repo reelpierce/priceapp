@@ -40,9 +40,15 @@ function AppContent() {
                 ×
               </button>
               {authView === 'login' ? (
-                <Login onSwitchToRegister={() => setAuthView('register')} />
+                <Login 
+                  onSwitchToRegister={() => setAuthView('register')}
+                  onBack={() => setActiveView('exchange')}
+                />
               ) : (
-                <Register onSwitchToLogin={() => setAuthView('login')} />
+                <Register 
+                  onSwitchToLogin={() => setAuthView('login')}
+                  onBack={() => setActiveView('exchange')}
+                />
               )}
             </div>
           </div>

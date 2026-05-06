@@ -4,9 +4,10 @@ import './Auth.css';
 
 interface LoginProps {
   onSwitchToRegister: () => void;
+  onBack?: () => void;
 }
 
-export default function Login({ onSwitchToRegister }: LoginProps) {
+export default function Login({ onSwitchToRegister, onBack }: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -30,6 +31,11 @@ export default function Login({ onSwitchToRegister }: LoginProps) {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        {onBack && (
+          <button onClick={onBack} className="back-button" aria-label="Go back">
+            ← Back
+          </button>
+        )}
         <h2 className="auth-title">Welcome Back</h2>
         <p className="auth-subtitle">Login to your wallet</p>
 

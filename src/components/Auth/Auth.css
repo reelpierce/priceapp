@@ -9,6 +9,39 @@
   border-radius: 24px;
   padding: 2.5rem;
   box-shadow: var(--shadow-xl);
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--primary-purple);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.back-button:hover {
+  color: var(--deep-purple);
+  transform: translateX(-3px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .back-button {
+    color: var(--light-purple);
+  }
+  
+  .back-button:hover {
+    color: var(--primary-purple);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
