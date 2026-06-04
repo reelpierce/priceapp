@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import { useExchangeRate } from '../hooks/useExchangeRate';
-import type { CurrencyCode, CurrencyInfo } from '../types/currency';
+import { FIAT_CURRENCIES } from '../constants/currencies';
+import type { CurrencyCode } from '../types/currency';
 import './Converter.css';
-
-const CURRENCIES: Record<CurrencyCode, CurrencyInfo> = {
-  usd: { code: 'USD', name: 'US Dollar', flag: '🇺🇸', symbol: '$' },
-  ngn: { code: 'NGN', name: 'Nigerian Naira', flag: '🇳🇬', symbol: '₦' },
-  eur: { code: 'EUR', name: 'Euro', flag: '🇪🇺', symbol: '€' },
-  gbp: { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£' },
-};
 
 export default function Converter() {
   const [amount, setAmount] = useState<string>('1');
@@ -84,8 +78,8 @@ export default function Converter() {
     setShowToPicker(false);
   };
 
-  const fromInfo = CURRENCIES[fromCurrency];
-  const toInfo = CURRENCIES[toCurrency];
+  const fromInfo = FIAT_CURRENCIES.find(([code]) => code === fromCurrency)?.[1] || FIAT_CURRENCIES[0][1];
+  const toInfo = FIAT_CURRENCIES.find(([code]) => code === toCurrency)?.[1] || FIAT_CURRENCIES[1][1];
 
   return (
     <div className="converter">
@@ -117,7 +111,7 @@ export default function Converter() {
 
               {showFromPicker && (
                 <div className="currency-picker">
-                  {Object.entries(CURRENCIES).map(([code, info]) => (
+                  {FIAT_CURRENCIES.map(([code, info]) => (
                     <button
                       key={code}
                       className={`currency-option ${code === fromCurrency ? 'active' : ''}`}
@@ -174,7 +168,7 @@ export default function Converter() {
 
               {showToPicker && (
                 <div className="currency-picker">
-                  {Object.entries(CURRENCIES).map(([code, info]) => (
+                  {FIAT_CURRENCIES.map(([code, info]) => (
                     <button
                       key={code}
                       className={`currency-option ${code === toCurrency ? 'active' : ''}`}

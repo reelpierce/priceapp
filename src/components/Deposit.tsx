@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import type { CurrencyCode } from '../types/currency';
+import { FIAT_CURRENCIES } from '../constants/currencies';
+import type { FiatCurrencyCode } from '../types/currency';
 import './Deposit.css';
 
-const CURRENCIES = {
-  usd: { code: 'USD', name: 'US Dollar', flag: '🇺🇸', symbol: '$', provider: 'stripe' },
-  ngn: { code: 'NGN', name: 'Nigerian Naira', flag: '🇳🇬', symbol: '₦', provider: 'paystack' },
-  eur: { code: 'EUR', name: 'Euro', flag: '🇪🇺', symbol: '€', provider: 'stripe' },
-  gbp: { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£', provider: 'stripe' },
-};
+const CURRENCIES = Object.fromEntries(
+  FIAT_CURRENCIES.map(([code, info]) => [
+    code,
+    { ...info, provider: code === 'ngn' ? 'paystack' : 'stripe' }
+  ])
+);
 
 interface DepositProps {
   onLoginRequired?: () => void;
@@ -16,7 +17,7 @@ interface DepositProps {
 
 export default function Deposit({ onLoginRequired }: DepositProps) {
   const { user } = useAuth();
-  const [currency, setCurrency] = useState<CurrencyCode>('ngn');
+  const [currency, setCurrency] = useState<FiatCurrencyCode>('ngn');
   const [amount, setAmount] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
@@ -127,7 +128,7 @@ export default function Deposit({ onLoginRequired }: DepositProps) {
                 <button
                   key={code}
                   className={`currency-option-btn ${currency === code ? 'active' : ''}`}
-                  onClick={() => setCurrency(code as CurrencyCode)}
+                  onClick={() => setCurrency(code as FiatCurrencyCode)}
                   disabled={loading}
                 >
                   <span className="currency-flag-large">{info.flag}</span>

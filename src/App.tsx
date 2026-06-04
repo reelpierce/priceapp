@@ -7,9 +7,10 @@ import Exchange from './components/Exchange'
 import Wallet from './components/Wallet'
 import TransactionHistory from './components/TransactionHistory'
 import Deposit from './components/Deposit'
+import Withdraw from './components/Withdraw'
 import './App.css'
 
-type View = 'converter' | 'exchange' | 'wallet' | 'history' | 'deposit' | 'auth';
+type View = 'converter' | 'exchange' | 'wallet' | 'history' | 'deposit' | 'withdraw' | 'auth';
 type AuthView = 'login' | 'register';
 
 function AppContent() {
@@ -115,6 +116,12 @@ function AppContent() {
               💳 Deposit
             </button>
             <button 
+              className={`tab ${activeView === 'withdraw' ? 'active' : ''}`}
+              onClick={() => setActiveView('withdraw')}
+            >
+              💸 Withdraw
+            </button>
+            <button 
               className={`tab ${activeView === 'exchange' ? 'active' : ''}`}
               onClick={() => setActiveView('exchange')}
             >
@@ -140,6 +147,14 @@ function AppContent() {
             {activeView === 'wallet' && user && <Wallet />}
             {activeView === 'deposit' && (
               <Deposit 
+                onLoginRequired={() => {
+                  setAuthView('login');
+                  setActiveView('auth');
+                }}
+              />
+            )}
+            {activeView === 'withdraw' && (
+              <Withdraw 
                 onLoginRequired={() => {
                   setAuthView('login');
                   setActiveView('auth');

@@ -1,5 +1,10 @@
-// Currency codes we support
-export type CurrencyCode = 'usd' | 'ngn' | 'eur' | 'gbp';
+// Currency codes we support (fiat + crypto)
+export type FiatCurrencyCode = 'usd' | 'ngn' | 'eur' | 'gbp';
+export type CryptoCurrencyCode = 'btc' | 'eth' | 'usdt';
+export type CurrencyCode = FiatCurrencyCode | CryptoCurrencyCode;
+
+// Currency type
+export type CurrencyType = 'fiat' | 'crypto';
 
 // Currency information
 export interface CurrencyInfo {
@@ -7,6 +12,9 @@ export interface CurrencyInfo {
   name: string;
   flag: string;
   symbol: string;
+  type: CurrencyType;
+  network?: string; // For crypto: 'bitcoin', 'ethereum', 'tron'
+  decimals?: number; // Precision for display
 }
 
 // API response structure from fawazahmed0/exchange-api

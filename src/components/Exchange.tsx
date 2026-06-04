@@ -2,15 +2,9 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useExchangeRate } from '../hooks/useExchangeRate';
 import { walletAPI } from '../services/api';
-import type { CurrencyCode, CurrencyInfo } from '../types/currency';
+import { CURRENCIES } from '../constants/currencies';
+import type { CurrencyCode } from '../types/currency';
 import './Exchange.css';
-
-const CURRENCIES: Record<CurrencyCode, CurrencyInfo> = {
-  usd: { code: 'USD', name: 'US Dollar', flag: '🇺🇸', symbol: '$' },
-  ngn: { code: 'NGN', name: 'Nigerian Naira', flag: '🇳🇬', symbol: '₦' },
-  eur: { code: 'EUR', name: 'Euro', flag: '🇪🇺', symbol: '€' },
-  gbp: { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£' },
-};
 
 interface ExchangeProps {
   onLoginRequired?: () => void;

@@ -28,11 +28,15 @@ import authRoutes from './routes/auth.js';
 import walletRoutes from './routes/wallet.js';
 import transactionRoutes from './routes/transactions.js';
 import depositRoutes from './routes/deposits.js';
+import withdrawalRoutes from './routes/withdrawals.js';
+import cryptoRoutes from './routes/crypto.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/deposits', depositRoutes);
+app.use('/api/withdrawals', withdrawalRoutes);
+app.use('/api/crypto', cryptoRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
