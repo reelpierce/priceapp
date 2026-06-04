@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
@@ -17,6 +17,13 @@ function AppContent() {
   const [activeView, setActiveView] = useState<View>('exchange');
   const [authView, setAuthView] = useState<AuthView>('login');
   const { user, loading, logout } = useAuth();
+
+  // Auto-close auth modal when user logs in or registers
+  useEffect(() => {
+    if (user && activeView === 'auth') {
+      setActiveView('exchange');
+    }
+  }, [user, activeView]);
 
   if (loading) {
     return (
